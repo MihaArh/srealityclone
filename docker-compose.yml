@@ -10,44 +10,28 @@ services:
       - ./init-scripts/inserts.sql:/docker-entrypoint-initdb.d/inserts.sql
     ports:
       - "5432:5432"
+    networks:
+      - default
   backend:
     environment:
         POSTGRES_USER: ${POSTGRES_USER}
         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
         POSTGRES_PORT: ${POSTGRES_PORT}
+        POSTGRES_DB: ${POSTGRES_DB}
     build:
       context: ./backend
     ports:
       - "3000:3000"
     depends_on:
       - database
-  # postgres:
-  #   build:
-  #     context: .
-  #     dockerfile: ./database/Dockerfile
-  #   ports:
-  #     - "5432:5432"
-  # backend:
-  #   build:
-  #     context: ./backend
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - database
-  # db:
-  #   container_name: postgres
-  #   image: postgres
-  #   ports:
-  #     - '5433:${DB_PORT}'
-  #   volumes:
-  #     - ./database:/docker-entrypoint-initdb.d
-  #   command: chmod +x /docker-entrypoint-initdb.d/init.sh
-  #   environment:
-  #     - POSTGRES_PASSWORD=${DB_PASSWORD}
-  #     - POSTGRES_DB=${DB_NAME}
-  # backend:
-  #   build: 
-  #     context: .
-  #     dockerfile: ./backend/Dockerfile
-  #   ports:
-  #     - "3000:3000"
+    networks:
+      - default
+  frontend:
+    environment:
+        API_URL: ${API_URL}
+    build:
+      context: ./client
+    ports:
+      - "8080:80"
+    networks:
+      - default
