@@ -1,17 +1,20 @@
-# Use an official PostgreSQL image as the base image
-FROM postgres:latest
+# Use an official Node.js runtime as the base image
+FROM node:14
 
-# Set environment variables for the PostgreSQL database
-ENV POSTGRES_DB postgres
-ENV POSTGRES_USER user
-ENV POSTGRES_PASSWORD password
+# Set the working directory in the container
+WORKDIR /app
 
-# Copy a custom initialization script into the container
-COPY ./backend/init.sh /docker-entrypoint-initdb.d/
+# Copy package.json and package-lock.json to the container
+COPY package*.json ./
 
-# Copy the SQL file into the container
-COPY ./backend/inserts.sql /docker-entrypoint-initdb.d/
+# Install app dependencies
+RUN npm install
 
+# Copy the rest of your application code to the container
+COPY . .
 
-# Grant execute permissions to the script
-RUN chmod +x /docker-entrypoint-initdb.d/init.sh
+# Expose the port that your Node.js app will run on
+EXPOSE 3000
+
+# Start your Node.js application
+CMD ["node", "index.js"]
