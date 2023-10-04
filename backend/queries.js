@@ -8,11 +8,37 @@ const pool = new Pool({
 });
 
 const getEstates = (request, response) => {
-  pool.query("SELECT * FROM estates", (error, results) => {
-    if (error) {
-      throw error;
+  const { page, pageSize } = request.query;
+  const offset = (page - 1) * pageSize;
+
+  const countQuery = "SELECT COUNT(*) FROM estates";
+
+  pool.query(countQuery, (countError, countResult) => {
+    if (countError) {
+      console.error("Error counting records:", countError);
+      return response.status(500).json({ error: "Internal Server Error" });
     }
-    response.status(200).json(results.rows);
+
+    const totalRecords = parseInt(countResult.rows[0].count, 10);
+    const totalPages = Math.ceil(totalRecords / pageSize);
+
+    const dataQuery = {
+      text: "SELECT * FROM estates LIMIT $1 OFFSET $2",
+      values: [pageSize, offset],
+    };
+
+    pool.query(dataQuery, (dataError, dataResult) => {
+      if (dataError) {
+        console.error("Error executing the query:", dataError);
+        return response.status(500).json({ error: "Internal Server Error" });
+      }
+
+      response.status(200).json({
+        totalPages,
+        currentPage: page,
+        data: dataResult.rows,
+      });
+    });
   });
 };
 
