@@ -8,7 +8,7 @@ const pool = new Pool({
 });
 
 const getEstates = (request, response) => {
-  const { page, pageSize } = request.query;
+  const { page = 1, pageSize = 10 } = request.query;
   const offset = (page - 1) * pageSize;
 
   const countQuery = "SELECT COUNT(*) FROM estates";
