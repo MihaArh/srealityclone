@@ -35,8 +35,8 @@ const getEstates = (request, response) => {
 
       response.status(200).json({
         totalPages,
-        currentPage: page,
-        data: dataResult.rows,
+        currentPage: parseInt(page),
+        estates: dataResult.rows,
       });
     });
   });
