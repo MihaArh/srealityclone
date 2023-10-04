@@ -9,7 +9,9 @@ function Dashboard() {
   const [currentPage, setCurrentPage] = useState<number>(0);
   useEffect(() => {
     async function fetchEstates() {
-      const response = await fetch(`http://localhost:3000/estates/`);
+      const response = await fetch(
+        `http://localhost:3000/estates/?page=1&pageSize=50`
+      );
       console.log(response.status === 200);
       const { totalPages, currentPage, estates }: IEstatesApi =
         await response.json();
@@ -21,10 +23,9 @@ function Dashboard() {
   }, []);
   return (
     <div className={styles.container}>
-      <div></div>
-      <div>
+      <div className={styles.cards}>
         {estates?.map((estate) => (
-          <Card {...estate} />
+          <Card key={estate.id} {...estate} />
         ))}
       </div>
       <div>
