@@ -23,7 +23,7 @@ function Pagination({
           disabled={currentPage === 1}
           onClick={() => onPageChange(currentPage - 1)}
         >
-          &laquo;
+          &lsaquo;
         </button>
 
         <button
@@ -66,7 +66,7 @@ function Pagination({
           disabled={currentPage === totalPages}
           onClick={() => onPageChange(currentPage + 1)}
         >
-          &raquo;
+          &rsaquo;
         </button>
       </div>
     </div>
