@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 
 import styles from "./Header.module.css";
 const PER_PAGE = [5, 10, 20, 50, 100];

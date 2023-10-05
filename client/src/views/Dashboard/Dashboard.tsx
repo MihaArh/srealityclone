@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IEstate, IEstatesApi } from "../../types";
 import Card from "../../components/Card";
 import Pagination from "../../components/Pagination";

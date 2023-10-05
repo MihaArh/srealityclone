@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import styles from "./Pagination.module.css";
 interface PaginationProps {
   totalPages: number;

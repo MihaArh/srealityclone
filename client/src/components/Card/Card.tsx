@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { IEstate } from "../../types";
 import styles from "./Card.module.css";
 import imageNotAvailable from "../../assets/image_not_available.png";
