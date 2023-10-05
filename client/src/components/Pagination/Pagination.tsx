@@ -39,6 +39,7 @@ function Pagination({
         {pageNumbers.map(
           (pageNumber) =>
             pageNumber > 1 &&
+            pageNumber < totalPages &&
             pageNumber >= currentPage - 1 &&
             pageNumber <= currentPage + 1 && (
               <button
@@ -53,8 +54,13 @@ function Pagination({
 
         {currentPage < totalPages - 2 && <span className="dots">...</span>}
 
-        {currentPage < totalPages && (
-          <button onClick={() => onPageChange(totalPages)}>{totalPages}</button>
+        {currentPage <= totalPages && (
+          <button
+            className={currentPage === totalPages ? styles.active : ""}
+            onClick={() => onPageChange(totalPages)}
+          >
+            {totalPages}
+          </button>
         )}
 
         <button
