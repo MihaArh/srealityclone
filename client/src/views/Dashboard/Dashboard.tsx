@@ -3,6 +3,7 @@ import { IEstate, IEstatesApi } from "../../types";
 import Card from "../../components/Card";
 import Pagination from "../../components/Pagination";
 import styles from "./Dashboard.module.css";
+import Header from "../../components/Header";
 function Dashboard() {
   const [estates, setEstates] = useState<IEstate[]>();
   const [totalPages, setTotalPages] = useState<number>(0);
@@ -28,10 +29,13 @@ function Dashboard() {
   };
   return (
     <div className={styles.container}>
+      <div>
+        <Header />
+      </div>
       <div className={styles.cards}>
-        {/* {estates?.map((estate) => (
+        {estates?.map((estate) => (
           <Card key={estate.id} {...estate} />
-        ))} */}
+        ))}
       </div>
       <div>
         <Pagination
