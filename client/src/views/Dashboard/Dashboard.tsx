@@ -4,11 +4,15 @@ import Card from "../../components/Card";
 import Pagination from "../../components/Pagination";
 import styles from "./Dashboard.module.css";
 import Header from "../../components/Header";
+const DEFAULT_ITEMS_PER_PAGE = 20;
 function Dashboard() {
   const [estates, setEstates] = useState<IEstate[]>();
-  const [totalPages, setTotalPages] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(1);
   const [currentPageState, setCurrentPageState] = useState<number>(1);
-  const [itemsPerPage, setItemsPerPage] = useState<number>(20);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(
+    DEFAULT_ITEMS_PER_PAGE
+  );
+
   useEffect(() => {
     async function fetchEstates() {
       const response = await fetch(
@@ -21,14 +25,15 @@ function Dashboard() {
     }
     fetchEstates();
   }, [currentPageState, itemsPerPage]);
-  const onPageChange = (page: number) => {
-    console.log(page);
 
+  const onPageChange = (page: number) => {
     setCurrentPageState(page);
   };
+
   const onPerPageChange = (count: number) => {
     setItemsPerPage(count);
   };
+
   return (
     <div className={styles.container}>
       <div>
