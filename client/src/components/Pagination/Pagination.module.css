@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.pagination {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+button {
+  margin: 8px;
+  padding: 10px;
+}
+
+.active {
+  background-color: #f25;
+}
