@@ -7,30 +7,32 @@ import Header from "../../components/Header";
 function Dashboard() {
   const [estates, setEstates] = useState<IEstate[]>();
   const [totalPages, setTotalPages] = useState<number>(0);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPageState, setCurrentPageState] = useState<number>(1);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(20);
   useEffect(() => {
     async function fetchEstates() {
       const response = await fetch(
-        `http://localhost:3000/estates/?page=1&pageSize=5`
+        `http://localhost:3000/estates/?page=${currentPageState}&pageSize=${itemsPerPage}`
       );
       console.log(response.status === 200);
-      const { totalPages, currentPage, estates }: IEstatesApi =
-        await response.json();
+      const { totalPages, estates }: IEstatesApi = await response.json();
       setEstates(estates);
       setTotalPages(totalPages);
-      setCurrentPage(currentPage);
     }
     fetchEstates();
-  }, []);
+  }, [currentPageState, itemsPerPage]);
   const onPageChange = (page: number) => {
     console.log(page);
 
-    setCurrentPage(page);
+    setCurrentPageState(page);
+  };
+  const onPerPageChange = (count: number) => {
+    setItemsPerPage(count);
   };
   return (
     <div className={styles.container}>
       <div>
-        <Header />
+        <Header onPerPageChange={onPerPageChange} itemsPerPage={itemsPerPage} />
       </div>
       <div className={styles.cards}>
         {estates?.map((estate) => (
@@ -40,7 +42,7 @@ function Dashboard() {
       <div>
         <Pagination
           totalPages={totalPages}
-          currentPage={currentPage}
+          currentPage={currentPageState}
           onPageChange={onPageChange}
         />
       </div>

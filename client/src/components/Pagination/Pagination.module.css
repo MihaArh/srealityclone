@@ -23,6 +23,11 @@ button {
   cursor: pointer;
 }
 
+button:hover {
+  background-color: #eaf0ea;
+  color: #435c21;
+}
+
 .active {
   background-color: #e1f6e2;
   color: #3e5c14;
