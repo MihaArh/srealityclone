@@ -9,6 +9,10 @@
   transition: transform 0.3s;
   cursor: pointer;
 }
+.card:hover {
+  box-shadow: 0 0 15px rgba(234, 240, 234, 0.6),
+    inset 0 0 10px rgba(234, 240, 234, 0.6); /* Outer and inner glow effect on hover */
+}
 
 .image img {
   width: 100%;
